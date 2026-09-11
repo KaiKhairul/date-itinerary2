@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case File: Date Sabtu 🔍</title>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0B1F3A;
+    --navy-deep: #071527;
+    --navy-mid: #16305A;
+    --red: #C81E3A;
+    --red-dark: #8F1229;
+    --gold: #D4AF37;
+    --gold-soft: #E8CD7A;
+    --paper: #F1E9D6;
+    --paper-white: #FBF6EA;
+    --ink: #1E1B16;
+    --ink-mid: #4A4438;
+    --ink-soft: #857D6A;
+    --shadow: rgba(11, 31, 58, 0.22);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Archivo', sans-serif;
+    background-color: var(--paper);
+    background-image:
+      radial-gradient(rgba(11,31,58,0.045) 1px, transparent 1px);
+    background-size: 14px 14px;
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* ── Clue ambient background ── */
+  .petals-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .petal {
+    position: absolute;
+    font-size: 14px;
+    opacity: 0;
+    animation: petalFall linear infinite;
+    color: var(--navy-mid);
+  }
+  @keyframes petalFall {
+    0%   { transform: translateY(-30px) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.35; }
+    90%  { opacity: 0.18; }
+    100% { transform: translateY(110vh) rotate(25deg); opacity: 0; }
+  }
+
+  /* ── Sticky header ── */
+  .sticky-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(11, 31, 58, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--gold);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateY(-100%);
+    transition: transform 0.35s ease;
+  }
+  .sticky-header.visible { transform: translateY(0); }
+  .sticky-header-title {
+    font-family: 'Special Elite', monospace;
+    font-size: 14px;
+    color: var(--paper-white);
+    flex: 1;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── Main container ── */
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 430px;
+    margin: 0 auto;
+    padding: 0 0 80px;
+  }
+
+  /* ── Hero header ── */
+  .hero {
+    padding: 52px 24px 30px;
+    text-align: center;
+    position: relative;
+    background: linear-gradient(180deg, var(--navy-deep) 0%, var(--navy) 78%, var(--paper) 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid var(--gold);
+    color: var(--gold-soft);
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  .hero-emoji {
+    font-size: 44px;
+    display: block;
+    margin-bottom: 10px;
+    animation: floatHeart 3s ease-in-out infinite;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4));
+  }
+  @keyframes floatHeart {
+    0%, 100% { transform: translateY(0) rotate(-4deg); }
+    50% { transform: translateY(-8px) rotate(4deg); }
+  }
+  .hero-title {
+    font-family: 'Special Elite', monospace;
+    font-size: 24px;
+    line-height: 1.4;
+    color: var(--paper-white);
+    margin-bottom: 10px;
+  }
+  .hero-title em {
+    color: var(--gold-soft);
+    font-style: normal;
+  }
+  .hero-subtitle {
+    font-size: 12.5px;
+    color: rgba(251, 246, 234, 0.65);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    font-style: italic;
+  }
+
+  /* ── Countdown ── */
+  .countdown-card {
+    margin: -14px 20px 20px;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%);
+    border-radius: 4px;
+    padding: 20px 24px;
+    box-shadow: 0 8px 24px var(--shadow);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--gold);
+  }
+  .countdown-card::before {
+    content: '🔍';
+    position: absolute;
+    top: -18px; right: -10px;
+    font-size: 90px;
+    opacity: 0.06;
+    transform: rotate(-15deg);
+  }
+  .countdown-label {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--gold-soft);
+    margin-bottom: 12px;
+  }
+  .countdown-blocks {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  .cd-block {
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-radius: 4px;
+    padding: 10px 14px;
+    min-width: 58px;
+  }
+  .cd-num {
+    font-family: 'Special Elite', monospace;
+    font-size: 26px;
+    color: var(--paper-white);
+    display: block;
+    line-height: 1;
+    animation: heartbeat 1s ease-in-out infinite;
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+  }
+  .cd-unit {
+    font-size: 9.5px;
+    font-weight: 700;
+    color: rgba(251, 246, 234, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .countdown-date-display {
+    margin-top: 12px;
+    font-size: 12.5px;
+    color: rgba(251, 246, 234, 0.85);
+    font-weight: 600;
+  }
+
+  /* ── Section label ── */
+  .section-label {
+    padding: 18px 24px 10px;
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: repeating-linear-gradient(90deg, var(--ink-soft) 0 4px, transparent 4px 8px);
+    opacity: 0.5;
+  }
+
+  /* ── Dress code card ── */
+  .dress-card {
+    margin: 0 20px 12px;
+    background: var(--paper-white);
+    border-radius: 4px;
+    padding: 18px 20px;
+    box-shadow: 0 2px 14px var(--shadow);
+    border: 1px dashed var(--navy-mid);
+    position: relative;
+  }
+  .dress-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .dress-emoji { font-size: 20px; }
+  .dress-title {
+    font-family: 'Special Elite', monospace;
+    font-size: 15px;
+    color: var(--navy);
+  }
+  .warning-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--red);
+    color: var(--paper-white);
+    font-size: 11.5px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+  }
+  .dress-note {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    background: rgba(11, 31, 58, 0.05);
+    border-left: 3px solid var(--gold);
+    border-radius: 3px;
+    padding: 10px 14px;
+    margin-top: 8px;
+  }
+
+  /* ── Timeline ── */
+  .timeline {
+    padding: 0 20px;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 43px;
+    top: 24px;
+    bottom: 24px;
+    width: 2px;
+    background: repeating-linear-gradient(to bottom, var(--red) 0 6px, transparent 6px 11px);
+    opacity: 0.7;
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 14px;
+    align-items: flex-start;
+    position: relative;
+  }
+
+  .tl-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+    padding-top: 4px;
+  }
+  .tl-time {
+    font-family: 'Special Elite', monospace;
+    font-size: 9.5px;
+    color: var(--ink-soft);
+    text-align: center;
+    line-height: 1.3;
+    min-width: 48px;
+  }
+
+  .tl-checkbox {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    border: 2px solid var(--navy);
+    background: var(--paper-white);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+  .tl-checkbox:active { transform: scale(0.9); }
+  .tl-checkbox.checked {
+    background: linear-gradient(135deg, var(--red), var(--red-dark));
+    border-color: var(--red-dark);
+    box-shadow: 0 2px 10px rgba(200, 30, 58, 0.5);
+  }
+  .tl-checkbox .checkmark {
+    font-size: 12px;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.2s ease;
+    color: white;
+  }
+  .tl-checkbox.checked .checkmark { opacity: 1; transform: scale(1); }
+
+  .tl-card {
+    flex: 1;
+    background: var(--paper-white);
+    border-radius: 4px;
+    padding: 14px 16px;
+    box-shadow: 0 2px 12px var(--shadow);
+    border-left: 3px solid var(--navy);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .tl-card:active { transform: scale(0.98); }
+  .tl-card.done {
+    opacity: 0.5;
+    background: #EFE8D8;
+    border-left-color: var(--ink-soft);
+  }
+  .tl-card.done .tl-card-title { text-decoration: line-through; color: var(--ink-soft); }
+
+  .tl-card-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.4;
+    margin-bottom: 4px;
+    transition: color 0.3s, text-decoration 0.3s;
+  }
+  .tl-card-sub {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .tl-card-note {
+    font-size: 11.5px;
+    color: var(--navy-mid);
+    font-style: italic;
+    margin-top: 6px;
+    line-height: 1.4;
+    background: rgba(212, 175, 55, 0.12);
+    border-radius: 3px;
+    padding: 6px 10px;
+  }
+  .tl-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 8px;
+  }
+  .tag {
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 3px;
+    letter-spacing: 0.02em;
+  }
+  .tag-time { background: #E4EAF3; color: var(--navy); }
+  .tag-prayer { background: #EDE6F5; color: #6B4E96; }
+  .tag-food { background: #FBEBC9; color: #8A6416; }
+  .tag-fun { background: #FBE0E4; color: var(--red-dark); }
+
+  /* ── Footer ── */
+  .footer {
+    padding: 40px 24px 32px;
+    text-align: center;
+  }
+  .footer-heart { font-size: 30px; display: block; margin-bottom: 10px; animation: floatHeart 2.5s ease-in-out infinite; }
+  .footer-msg {
+    font-family: 'Special Elite', monospace;
+    font-size: 16px;
+    color: var(--navy);
+    line-height: 1.6;
+    margin-bottom: 6px;
+  }
+  .footer-sub {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+    font-style: italic;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- Clue ambient background -->
+<div class="petals-bg" id="petalsBg"></div>
+
+<!-- Sticky header -->
+<div class="sticky-header" id="stickyHeader">
+  <div class="sticky-header-title">🔍 Case File: Date Sabtu</div>
+</div>
+
+<div class="container">
+
+  <!-- Hero -->
+  <div class="hero" id="heroTop">
+    <span class="hero-badge">📁 CASE NO. 926 — OPEN</span>
+    <span class="hero-emoji">🕵️‍♂️🔍</span>
+    <h1 class="hero-title">The Case of<br>Saturday <em>with Anis</em></h1>
+    <p class="hero-subtitle">"There is always only one truth" — let's solve today together 🕵️‍♀️</p>
+  </div>
+
+  <!-- Countdown -->
+  <div class="countdown-card">
+    <div class="countdown-label">⏳ CASE OPENS IN</div>
+    <div class="countdown-blocks">
+      <div class="cd-block"><span class="cd-num" id="cdDays">--</span><span class="cd-unit">Days</span></div>
+      <div class="cd-block"><span class="cd-num" id="cdHours">--</span><span class="cd-unit">Hrs</span></div>
+      <div class="cd-block"><span class="cd-num" id="cdMins">--</span><span class="cd-unit">Min</span></div>
+      <div class="cd-block"><span class="cd-num" id="cdSecs">--</span><span class="cd-unit">Sec</span></div>
+    </div>
+    <div class="countdown-date-display">📅 Sabtu, 12 September 2026 — 7:00 AM</div>
+  </div>
+
+
+
+  <!-- Timeline -->
+  <div class="section-label">🗂️ Case Timeline</div>
+  <div class="timeline" id="timeline"></div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span class="footer-heart">🔍💕</span>
+    <div class="footer-msg">Case closed... for another date soon ✨</div>
+    <div class="footer-sub">one truth prevails: I can't wait for Saturday 🌸</div>
+  </div>
+
+</div>
+
+<script>
+// ── Itinerary data ──
+const items = [
+  {
+    time: "7:00 AM",
+    title: "Bergerak ke Kwasa Sentral 🚗",
+    sub: "Dari rumah masing-masing • Estimate 45 min – 1 jam",
+    note: null,
+    tags: ["time"],
+    emoji: "🚗"
+  },
+  {
+    time: "8:00 AM",
+    title: "Berjumpa di Kwasa Sentral 🤝",
+    sub: "Rendezvous point!",
+    note: null,
+    tags: ["fun"],
+    emoji: "📍"
+  },
+  {
+    time: "8:15 AM",
+    title: "Pergerakan ke One Utama 🛣️",
+    sub: "Estimate 30 – 45 min",
+    note: null,
+    tags: ["time"],
+    emoji: "🚉"
+  },
+  {
+    time: "8:45 AM",
+    title: "Sampai di One Utama 🏢",
+    sub: "8:45 AM – 9:00 AM",
+    note: null,
+    tags: ["time"],
+    emoji: "🏢"
+  },
+  {
+    time: "9:10 AM",
+    title: "Sarapan Pagi Ringan-ringan 🥐",
+    sub: "Estimate 30 – 45 min",
+    note: "Fuel up before the investigation begins!",
+    tags: ["food"],
+    emoji: "🍳"
+  },
+  {
+    time: "10:10 AM",
+    title: "Tengok Wayang 🎬🍿",
+    sub: "1 jam 50 minit",
+    note: "Shh — the movie is starting. No talking during the case briefing!",
+    tags: ["fun"],
+    emoji: "🎞️"
+  },
+  {
+    time: "12:20 PM",
+    title: "Mencari Makan Tengah Hari 🍽️",
+    sub: "12:20 / 12:30 PM • Estimate 45 min – 1 jam",
+    note: null,
+    tags: ["food"],
+    emoji: "🍜"
+  },
+  {
+    time: "1:30 PM",
+    title: "Solat 🕌",
+    sub: "Estimate 10 – 15 minit",
+    note: null,
+    tags: ["prayer"],
+    emoji: "🕌"
+  },
+  {
+    time: "1:50 PM",
+    title: "Free Roam, Window Shopping 🛍️",
+    sub: "1 jam – 2 jam",
+    note: "Time to snoop around the mall for clues (or just cute stuff) 🔍",
+    tags: ["fun"],
+    emoji: "🛍️"
+  },
+  {
+    time: "4:00 PM",
+    title: "Bergerak Semula ke Kwasa Sentral 🚗💨",
+    sub: "Heading back!",
+    note: null,
+    tags: ["time"],
+    emoji: "🚗"
+  },
+  {
+    time: "5:00 PM",
+    title: "Pulang ke Rumah Masing-masing 🏠",
+    sub: "Case closed for today!",
+    note: null,
+    tags: ["time"],
+    emoji: "🏠"
+  }
+];
+
+const tagLabels = {
+  time: { label: "⏱ Transit", cls: "tag-time" },
+  fun: { label: "🔍 Investigation", cls: "tag-fun" },
+  food: { label: "🍴 Makan", cls: "tag-food" },
+  prayer: { label: "🕌 Solat", cls: "tag-prayer" }
+};
+
+let checked = new Array(items.length).fill(false);
+
+function buildTimeline() {
+  const tl = document.getElementById('timeline');
+  tl.innerHTML = '';
+  items.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'timeline-item';
+    div.innerHTML = `
+      <div class="tl-left">
+        <div class="tl-time">${item.time.replace(' ', '<br>')}</div>
+        <div class="tl-checkbox ${checked[i] ? 'checked' : ''}" id="chk${i}" onclick="toggleCheck(${i})">
+          <span class="checkmark">✓</span>
+        </div>
+      </div>
+      <div class="tl-card ${checked[i] ? 'done' : ''}" id="card${i}" onclick="toggleCheck(${i})">
+        <div class="tl-card-title">${item.emoji} ${item.title}</div>
+        ${item.sub ? `<div class="tl-card-sub">${item.sub}</div>` : ''}
+        ${item.note ? `<div class="tl-card-note">"${item.note}"</div>` : ''}
+        <div class="tl-card-tags">
+          ${item.tags.map(t => `<span class="tag ${tagLabels[t].cls}">${tagLabels[t].label}</span>`).join('')}
+        </div>
+      </div>
+    `;
+    tl.appendChild(div);
+  });
+  updateProgress();
+}
+
+function toggleCheck(i) {
+  checked[i] = !checked[i];
+  const chk = document.getElementById(`chk${i}`);
+  const card = document.getElementById(`card${i}`);
+  chk.classList.toggle('checked', checked[i]);
+  card.classList.toggle('done', checked[i]);
+  updateProgress();
+}
+
+function updateProgress() {}
+
+// ── Countdown ──
+function updateCountdown() {
+  // Fixed target: Saturday, 12 September 2026, 7:00 AM
+  const now = new Date();
+  const target = new Date(2026, 8, 12, 7, 0, 0); // month is 0-indexed: 8 = September
+
+  const diff = target - now;
+  if (diff <= 0) {
+    ['cdDays','cdHours','cdMins','cdSecs'].forEach(id => document.getElementById(id).textContent = '00');
+    return;
+  }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cdDays').textContent = String(d).padStart(2,'0');
+  document.getElementById('cdHours').textContent = String(h).padStart(2,'0');
+  document.getElementById('cdMins').textContent = String(m).padStart(2,'0');
+  document.getElementById('cdSecs').textContent = String(s).padStart(2,'0');
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+
+// ── Sticky header ──
+const stickyHeader = document.getElementById('stickyHeader');
+const hero = document.getElementById('heroTop');
+window.addEventListener('scroll', () => {
+  const heroBottom = hero.getBoundingClientRect().bottom;
+  stickyHeader.classList.toggle('visible', heroBottom < 0);
+});
+
+// ── Clue particles ──
+function spawnPetals() {
+  const container = document.getElementById('petalsBg');
+  const icons = ['🔍','👣','?'];
+  for (let i = 0; i < 16; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.textContent = icons[Math.floor(Math.random() * icons.length)];
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.top = '-20px';
+    p.style.animationDuration = (9 + Math.random() * 14) + 's';
+    p.style.animationDelay = (Math.random() * 15) + 's';
+    p.style.fontSize = (12 + Math.random() * 10) + 'px';
+    container.appendChild(p);
+  }
+}
+spawnPetals();
+
+// Build everything
+buildTimeline();
+</script>
+</body>
+</html>
